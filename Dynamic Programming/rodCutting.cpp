@@ -40,10 +40,25 @@ int memoized_cut_rod(vector<int> p, int n){
     return memoized_cut_rod_aux(p, n, r);
 }
 
+//bottom-up implementation
+int bottoum_up_cut_rod(vector<int> p, int n){
+    vector<int> r(n+1);
+    r[0] = 0;
+    for(int j = 1; j <= n; j++){
+        int q = -1e9;
+        for(int i = 1; i <= j; i++){
+            q = max(q, p[i - 1] + r[j - i]);
+        }
+        r[j] = q;
+    }
+    return r[n];
+}
+
 int main()
 {
     vector<int> p = {1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
     // cout << cutrod(p, 4);
-    cout << memoized_cut_rod(p, 10);
+    cout << memoized_cut_rod(p, 10) << endl;
+    cout << bottoum_up_cut_rod(p, 4);
     return 0;
 }
